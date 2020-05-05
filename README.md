@@ -13,3 +13,9 @@ In full Google fashion, they created yet another SAR implementation in Android 1
 It is called "2-Stage-Init", or let's shorten as 2SI. 2SI is required to support logical partitions as the kernel cannot mount the super blocks directly without userspace support.
 The way 2SI works is that the kernel always boots with initramfs. Init in ramdisk will then decide how to boot the device. For A/B it can either mount system as root or start recovery based on a cmdline flag; for A-only, it will directly mount system as root and boot into system.
 Google added SAR to U-Q, and 2SI to L-Q. 2SI is just one of the SAR impls, others for example are LSAR and Huawei's own BS. For existing devices using LSAR, they can still use it for Q. However for all non-SAR devices out there, the easiest way is to simply port 2SI for SAR.
+So what is the current state of Android 10? For all existing SAR devices, you will still be using LSAR, with the exception of Pixel 3 as Google retrofitted it to use 2SI. All other devices (including custom ROMs) will be using 2SI as it is much easier to be ported over.
+The current state of Magisk: it supports non-SAR (good old initramfs), LSAR (both A/B and A-only), and 2SI for A/B (currently Pixel 3 is the only one using this AFAIC). 2SI for A-only will come with the next release.
+
+P.S. 2SI is a NIGHTMARE to work with, so yeah....
+If you want to see the detail specifications of system-as-root, please check the official documentation from Google:
+https://source.android.com/devices/bootloader/system-as-root
