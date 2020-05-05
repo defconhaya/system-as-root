@@ -10,7 +10,7 @@ For each Android version X, there are 2 sets of requirements.
 This means old devices upgrading to X only need to follow U-X, not L-X.
 Google made SAR part of L-P, which is why you see TONs of new devices (including S10) using SAR. For A/B devices, not much has changed, however for A-only, boot images no longer contain ramdisk, and the kernel will just directly mount system as root and boot from that.
 In full Google fashion, they created yet another SAR implementation in Android 10!  \(^_^)/
-It is called "2-Stage-Init", or let's shorten as 2SI. 2SI is required to support logical partitions as the kernel cannot mount the super blocks directly without userspace support.
+It is called `"2-Stage-Init"`, or let's shorten as 2SI. 2SI is required to support logical partitions as the kernel cannot mount the super blocks directly without userspace support.
 The way 2SI works is that the kernel always boots with initramfs. Init in ramdisk will then decide how to boot the device. For A/B it can either mount system as root or start recovery based on a cmdline flag; for A-only, it will directly mount system as root and boot into system.
 Google added SAR to U-Q, and 2SI to L-Q. 2SI is just one of the SAR impls, others for example are LSAR and Huawei's own BS. For existing devices using LSAR, they can still use it for Q. However for all non-SAR devices out there, the easiest way is to simply port 2SI for SAR.
 So what is the current state of Android 10? For all existing SAR devices, you will still be using LSAR, with the exception of Pixel 3 as Google retrofitted it to use 2SI. All other devices (including custom ROMs) will be using 2SI as it is much easier to be ported over.
